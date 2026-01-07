@@ -1,0 +1,27 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows:
+      - Release
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    environment:
+      name: Demo version
+    steps:
+      - name: Deploy demo version
+        uses: appleboy/ssh-action@v1.2.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          command_timeout: 5m
+          script: |
+            docker pull ghcr.io/${{ github.repository_owner }}/pumpkin:latest
+            docker stop pumpkin
+            docker run --rm -d --network pumpkin --name pumpkin ghcr.io/${{ github.repository_owner }}/pumpkin:latest
