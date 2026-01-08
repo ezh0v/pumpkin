@@ -32,4 +32,4 @@
    go run main.go
    ```
 
-5. Then open http://localhost:8000 in your browser.
+5. Open http://localhost:8000 in your browser.

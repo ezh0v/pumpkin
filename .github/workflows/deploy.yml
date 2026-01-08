@@ -37,7 +37,8 @@ jobs:
           script: |
             docker pull ghcr.io/${{ github.repository_owner }}/pumpkin:latest
             docker stop pumpkin || true
-            docker run --rm -d \
+            docker rm pumpkin || true
+            docker run -d \
               --name pumpkin \
               --network pumpkin \
               --restart unless-stopped \
