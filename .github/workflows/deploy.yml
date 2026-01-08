@@ -8,12 +8,25 @@ on:
       - completed
 
 jobs:
-  deploy:
+  deploy-demo:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     environment:
       name: Demo version
     steps:
+      - name: Checkout
+      - uses: actions/checkout@v6
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+      - name: Install dependencies
+        run: |
+          go install github.com/pressly/goose/v3/cmd/goose@latest
+      - name: Run migrations
+        env:
+          DATABASE_CONNECT: ${{ secrets.DATABASE_CONNECT }}
+        run: make migrate-up
       - name: Deploy demo version
         uses: appleboy/ssh-action@v1.2.4
         with:
