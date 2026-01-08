@@ -12,11 +12,11 @@ help:
 DATABASE_CONNECT ?= host=$(POSTGRES_HOST) port=5432 user=$(POSTGRES_USER) password=$(POSTGRES_PASSWORD) dbname=$(POSTGRES_DB) sslmode=disable TimeZone=$(TIMEZONE)
 
 ##@ Migrations
-migrate-new: ## Example: make migrate-new NAME=
+migrate-new: ## Create a new migration. Example: make migrate-new NAME=
 	goose create -dir migrations $(NAME) sql
 
-migrate-up: ##
+migrate-up: ## Apply all migrations
 	goose postgres "$(DATABASE_CONNECT)" up -dir migrations
 
-migrate-down: ##
+migrate-down: ## Roll back the last migration
 	goose postgres "$(DATABASE_CONNECT)" down -dir migrations

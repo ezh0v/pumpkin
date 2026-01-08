@@ -9,6 +9,10 @@ Community booru-style gallery.
 
 Contributions to the project are welcome! See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
 
+## DEVELOPMENT
+
+To build the project from source, see [DEVELOPMENT.md](DEVELOPMENT.md).
+
 ## Licenses
 
 - The source code is licensed under the [GPLv3 License](LICENSE).
