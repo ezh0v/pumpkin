@@ -29,7 +29,7 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	slog.SetDefault(logger)
 
-	server, err := server.New(viewsFS, staticFS)
+	server, err := server.New(os.Getenv("APP_VERSION"), viewsFS, staticFS)
 	if err != nil {
 		slog.Error("server initialization failed", "error", err)
 		return

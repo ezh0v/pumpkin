@@ -12,7 +12,7 @@ import (
 	"github.com/ezh0v/pumpkin/internal/pkg/html"
 )
 
-func New(viewsFS, staticFS fs.FS, opts ...Option) (*http.Server, error) {
+func New(appVersion string, viewsFS, staticFS fs.FS, opts ...Option) (*http.Server, error) {
 	options := &options{}
 
 	for _, opt := range opts {
@@ -27,6 +27,7 @@ func New(viewsFS, staticFS fs.FS, opts ...Option) (*http.Server, error) {
 	}
 
 	c := &app.Context{
+		AppVersion: appVersion,
 		Renderer: html.Renderer{
 			Views: views,
 		},
