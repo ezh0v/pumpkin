@@ -11,7 +11,7 @@ Contributions to the project are welcome! See [CONTRIBUTING.md](.github/CONTRIBU
 
 ## DEVELOPMENT
 
-To build the project from source, see [DEVELOPMENT.md](.github/DEVELOPMENT.md).
+To build the project from source, see [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ## Licenses
 
