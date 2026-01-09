@@ -26,10 +26,16 @@
    docker compose -f docker-compose.dev.yml up -d
    ```
 
-4. Run application:
+4. Apply migrations
+
+   ```sh
+   make migrate-up
+   ```
+
+5. Run application:
 
    ```sh
    go run main.go
    ```
 
-5. Open http://localhost:8000 in your browser.
+6. Open http://localhost:8000 in your browser.
