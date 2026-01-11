@@ -1,0 +1,54 @@
+services:
+  pumpkin:
+    image: ghcr.io/ezh0v/pumpkin:latest
+    container_name: pumpkin
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.pumpkin.rule=Host(`${PUMPKIN_HOST}`)"
+      - "traefik.http.routers.pumpkin.entrypoints=websecure"
+      - "traefik.http.routers.pumpkin.tls=true"
+      - "traefik.http.routers.pumpkin.tls.certresolver=letencrypt"
+
+      - "traefik.http.services.pumpkin.loadbalancer.server.port=8000"
+    networks:
+      - pumpkin
+  postgres:
+    image: postgres:18.1-alpine3.23
+    container_name: postgres
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_TIMEZONE: ${TZ}
+    volumes:
+      - ./runtime/postgresql:/var/lib/postgresql
+      - ./certs/postgres_cert.pem:/var/lib/postgresql/cert.pem:ro
+      - ./certs/postgres_key.pem:/var/lib/postgresql/key.pem:ro
+    networks:
+      - pumpkin
+    command: >
+      -c ssl=on
+      -c ssl_cert_file=/var/lib/postgresql/cert.pem
+      -c ssl_key_file=/var/lib/postgresql/key.pem
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./configs/traefik.yml:/traefik.yml:ro
+      - ./runtime/traefik/certs:/certs
+    networks:
+      - pumpkin
+
+networks:
+  pumpkin:
+    name: pumpkin
