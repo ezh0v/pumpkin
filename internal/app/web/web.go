@@ -6,16 +6,16 @@ import (
 	"github.com/ezh0v/pumpkin/internal/app"
 )
 
-func Route(c *app.Context) http.Handler {
+func Route(app *app.Context) http.Handler {
 	handler := http.NewServeMux()
-	handler.HandleFunc("GET /", home(c))
+	handler.HandleFunc("GET /", home(app))
 	return handler
 }
 
-func home(c *app.Context) http.HandlerFunc {
+func home(app *app.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		c.RenderHTML(http.StatusOK, w, "home.html", map[string]any{
-			"version": c.Version,
+		app.RenderHTML(http.StatusOK, w, "home.html", map[string]any{
+			"appVersion": app.Version,
 		})
 	}
 }
