@@ -10,4 +10,4 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-root}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
       POSTGRES_DB: ${POSTGRES_DB:-db}
-      POSTGRES_TIMEZONE: ${TIMEZONE:-Europe/Moscow}
+      POSTGRES_TIMEZONE: ${TZ:-Europe/Moscow}

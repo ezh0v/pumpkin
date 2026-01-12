@@ -6,7 +6,7 @@ services:
     labels:
       - "traefik.enable=true"
 
-      - "traefik.http.routers.pumpkin.rule=Host(`${PUMPKIN_HOST}`)"
+      - "traefik.http.routers.pumpkin.rule=Host(`${APP_HOST}`)"
       - "traefik.http.routers.pumpkin.entrypoints=websecure"
       - "traefik.http.routers.pumpkin.tls=true"
       - "traefik.http.routers.pumpkin.tls.certresolver=letencrypt"
