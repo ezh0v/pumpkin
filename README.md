@@ -1,5 +1,5 @@
 <div align="center">
-    <img alt="pumpkin logo" src="static/logo.svg" width="200">
+    <img alt="pumpkin logo" src="https://github.com/user-attachments/assets/30c13efb-fc00-4550-a22b-4c1cac52627b?raw=true" width="200">
     <h1>Pumpkin</h1>
 </div>
 
