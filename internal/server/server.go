@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/ezh0v/pumpkin/internal/app"
-	"github.com/ezh0v/pumpkin/internal/app/api"
-	"github.com/ezh0v/pumpkin/internal/app/web"
+	"github.com/ezh0v/pumpkin/internal/server/api"
+	"github.com/ezh0v/pumpkin/internal/server/web"
 )
 
 func New(app *app.Context, opts ...Option) (*http.Server, error) {
