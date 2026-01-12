@@ -27,13 +27,13 @@ services:
       POSTGRES_TIMEZONE: ${TZ}
     volumes:
       - ./runtime/postgresql:/var/lib/postgresql
-      - ./certs/postgres_cert.pem:/var/lib/postgresql/postgres_cert.pem:ro
-      - ./certs/postgres_key.pem:/var/lib/postgresql/postgres_key.pem:ro
-      - ./configs/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./certs/postgres_cert.pem:/var/lib/postgresql/cert.pem:ro
+      - ./certs/postgres_key.pem:/var/lib/postgresql/key.pem:ro
+      - ./configs/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./configs/pg_hba.conf:/etc/postgresql/pg_hba.conf
     networks:
       - pumpkin
-    command: >
-      postgres -c config_file=/etc/postgresql/postgresql.conf
+    command: -c config_file=/etc/postgresql/postgresql.conf
   traefik:
     image: traefik:v3.0
     container_name: traefik
