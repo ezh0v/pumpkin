@@ -18,8 +18,8 @@ var (
 )
 
 type Context struct {
-	AppVersion string
-	StaticFS   fs.FS
+	Version  string
+	StaticFS fs.FS
 	html.Renderer
 }
 
@@ -30,8 +30,8 @@ func New(config *Config) (*Context, error) {
 	}
 
 	return &Context{
-		AppVersion: config.AppVersion,
-		StaticFS:   staticFS,
+		Version:  config.Version,
+		StaticFS: staticFS,
 		Renderer: html.Renderer{
 			Views: views,
 		},

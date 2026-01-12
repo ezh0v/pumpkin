@@ -22,7 +22,7 @@ func main() {
 	slog.SetDefault(logger)
 
 	app, err := app.New(&app.Config{
-		AppVersion: os.Getenv("APP_VERSION"),
+		Version: os.Getenv("APP_VERSION"),
 	})
 	if err != nil {
 		slog.Error("app initialization failed", "error", err)
