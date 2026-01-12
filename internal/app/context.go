@@ -40,12 +40,12 @@ func New(config *Config) (*Context, error) {
 		return nil, fmt.Errorf("postgres initialization failed %v", err)
 	}
 
+	renderer := html.NewRenderer(views)
+
 	return &Context{
 		Version:  config.Version,
 		StaticFS: staticFS,
 		database: database,
-		Renderer: html.Renderer{
-			Views: views,
-		},
+		Renderer: renderer,
 	}, nil
 }
