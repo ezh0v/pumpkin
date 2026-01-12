@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"embed"
 	"errors"
 	"log/slog"
 	"net/http"
@@ -11,15 +10,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/ezh0v/pumpkin/internal/app"
 	"github.com/ezh0v/pumpkin/internal/app/server"
-)
-
-var (
-	//go:embed views
-	viewsFS embed.FS
-
-	//go:embed static
-	staticFS embed.FS
 )
 
 func main() {
@@ -29,7 +21,15 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	slog.SetDefault(logger)
 
-	server, err := server.New(os.Getenv("APP_VERSION"), viewsFS, staticFS)
+	app, err := app.New(&app.Config{
+		AppVersion: os.Getenv("APP_VERSION"),
+	})
+	if err != nil {
+		slog.Error("app initialization failed", "error", err)
+		return
+	}
+
+	server, err := server.New(app)
 	if err != nil {
 		slog.Error("server initialization failed", "error", err)
 		return
