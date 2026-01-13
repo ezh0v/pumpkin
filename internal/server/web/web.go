@@ -14,8 +14,8 @@ func Route(app *app.Context) http.Handler {
 
 func home(app *app.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		app.RenderHTML(http.StatusOK, w, "home.html", map[string]any{
-			"appVersion": app.Version,
-		})
+		app.RenderTemplate(w, "home.html",
+			"appVersion", app.Version,
+		)
 	}
 }
