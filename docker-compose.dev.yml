@@ -1,4 +1,16 @@
 services:
+  pumpkin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_VERSION: ${APP_VERSION:-dev}
+    container_name: pumpkin
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
   postgres:
     image: postgres:18.1-alpine3.23
     container_name: postgres
@@ -10,4 +22,4 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-root}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
       POSTGRES_DB: ${POSTGRES_DB:-db}
-      POSTGRES_TIMEZONE: ${TZ:-Europe/Moscow}
+      POSTGRES_TIMEZONE: ${TIMEZONE:-Europe/Moscow}

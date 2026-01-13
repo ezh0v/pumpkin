@@ -13,7 +13,9 @@ services:
 
       - "traefik.http.services.pumpkin.loadbalancer.server.port=8000"
     networks:
-      - pumpkin
+      - backend
+    depends_on:
+      - postgres
   postgres:
     image: postgres:18.1-alpine3.23
     container_name: postgres
@@ -24,7 +26,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_TIMEZONE: ${TZ}
+      POSTGRES_TIMEZONE: ${TIMEZONE}
     volumes:
       - ./runtime/postgresql:/var/lib/postgresql
       - ./certs/postgres_cert.pem:/var/lib/postgresql/cert.pem:ro
@@ -32,7 +34,7 @@ services:
       - ./configs/postgresql.conf:/etc/postgresql/postgresql.conf
       - ./configs/pg_hba.conf:/etc/postgresql/pg_hba.conf
     networks:
-      - pumpkin
+      - backend
     command: -c config_file=/etc/postgresql/postgresql.conf
   traefik:
     image: traefik:v3.0
@@ -46,8 +48,10 @@ services:
       - ./configs/traefik.yml:/traefik.yml:ro
       - ./runtime/traefik/certs:/certs
     networks:
+      - backend
+    depends_on:
       - pumpkin
 
 networks:
-  pumpkin:
-    name: pumpkin
+  backend:
+    name: backend
