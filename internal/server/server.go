@@ -3,7 +3,6 @@ package server
 import (
 	"context"
 	"embed"
-	"fmt"
 	"io"
 	"log/slog"
 	"net/http"
@@ -35,7 +34,7 @@ func New(opts ...Option) (*Server, error) {
 
 	database, err := postgres.New("")
 	if err != nil {
-		return nil, fmt.Errorf("postgres %v", err)
+		return nil, err
 	}
 
 	handler := http.NewServeMux()
