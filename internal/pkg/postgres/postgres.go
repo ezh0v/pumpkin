@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"database/sql"
-	"log/slog"
 
 	_ "github.com/lib/pq"
 )
@@ -17,13 +16,15 @@ func New(databaseConnect string) (*Database, error) {
 		return nil, err
 	}
 
+	if err := db.Ping(); err != nil {
+		return nil, err
+	}
+
 	return &Database{
 		db: db,
 	}, nil
 }
 
-func (d *Database) Close() {
-	if err := d.db.Close(); err != nil {
-		slog.Error("close postgres connection failed", "err", err)
-	}
+func (d *Database) Close() error {
+	return d.db.Close()
 }

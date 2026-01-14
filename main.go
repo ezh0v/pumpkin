@@ -8,9 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 
-	"github.com/ezh0v/pumpkin/internal/app"
 	"github.com/ezh0v/pumpkin/internal/server"
 )
 
@@ -21,16 +19,7 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	slog.SetDefault(logger)
 
-	app, err := app.New(&app.Config{
-		Version:         os.Getenv("APP_VERSION"),
-		DatabaseConnect: os.Getenv("DATABASE_CONNECT"),
-	})
-	if err != nil {
-		slog.Error("app initialization failed", "error", err)
-		return
-	}
-
-	server, err := server.New(app)
+	server, err := server.New()
 	if err != nil {
 		slog.Error("server initialization failed", "error", err)
 		return
@@ -45,10 +34,7 @@ func main() {
 
 	<-ctx.Done()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	if err := server.Shutdown(ctx); err != nil {
+	if err := server.Shutdown(); err != nil {
 		slog.Error("server shutdown failed", "error", err)
 	}
 }
