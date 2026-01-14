@@ -2,9 +2,7 @@ package main
 
 import (
 	"context"
-	"errors"
 	"log/slog"
-	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -26,8 +24,7 @@ func main() {
 	}
 
 	go func() {
-		err := server.ListenAndServe()
-		if !errors.Is(err, http.ErrServerClosed) {
+		if err := server.ListenAndServe(); err != nil {
 			slog.Error("server terminated with an error", "error", err)
 		}
 	}()

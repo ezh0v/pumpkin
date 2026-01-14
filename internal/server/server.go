@@ -3,8 +3,8 @@ package server
 import (
 	"context"
 	"embed"
+	"errors"
 	"io"
-	"log/slog"
 	"net/http"
 	"time"
 
@@ -56,18 +56,25 @@ func New(opts ...Option) (*Server, error) {
 }
 
 func (s *Server) ListenAndServe() error {
-	return s.httpServer.ListenAndServe()
+	err := s.httpServer.ListenAndServe()
+	if !errors.Is(err, http.ErrServerClosed) {
+		return err
+	}
+
+	return nil
 }
 
 func (s *Server) Shutdown() error {
-	for _, resource := range s.resources {
-		if err := resource.Close(); err != nil {
-			slog.Error("failed to close resource", "err", err)
-		}
-	}
-
 	ctx, cancel := context.WithTimeout(context.Background(), s.shutdownTimeout)
 	defer cancel()
 
-	return s.httpServer.Shutdown(ctx)
+	shutdownErr := s.httpServer.Shutdown(ctx)
+
+	for _, resource := range s.resources {
+		if err := resource.Close(); err != nil {
+			shutdownErr = errors.Join(shutdownErr, err)
+		}
+	}
+
+	return shutdownErr
 }
