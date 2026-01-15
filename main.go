@@ -51,6 +51,10 @@ func main() {
 
 func close(resources ...io.Closer) {
 	for _, resource := range resources {
+		if resource == nil {
+			continue
+		}
+
 		if err := resource.Close(); err != nil {
 			slog.Error("failed to close resource", "error", err)
 		}
