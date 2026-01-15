@@ -3,6 +3,14 @@ services:
     image: ghcr.io/ezh0v/pumpkin:latest
     container_name: pumpkin
     restart: unless-stopped
+    environment:
+      DATABASE_CONNECT: >
+        host=postgres 
+        user=${POSTGRES_USER} 
+        password=${POSTGRES_PASSWORD} 
+        dbname=${POSTGRES_DB} 
+        sslmode=require 
+        TimeZone=${TIMEZONE}
     labels:
       - "traefik.enable=true"
 
