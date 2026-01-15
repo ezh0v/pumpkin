@@ -1,8 +1,12 @@
 package api
 
-import "net/http"
+import (
+	"net/http"
 
-func Handler() http.Handler {
+	"github.com/ezh0v/pumpkin/internal/app"
+)
+
+func Handler(ctx *app.Context) http.Handler {
 	handler := http.NewServeMux()
 	return http.StripPrefix("/api", handler)
 }

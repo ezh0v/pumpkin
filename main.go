@@ -7,6 +7,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/ezh0v/pumpkin/internal/app"
+	"github.com/ezh0v/pumpkin/internal/pkg/postgres"
 	"github.com/ezh0v/pumpkin/internal/server"
 )
 
@@ -17,7 +19,15 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	slog.SetDefault(logger)
 
-	server, err := server.New()
+	database, err := postgres.New(os.Getenv("DATABASE_CONNECT"))
+	if err != nil {
+		slog.Error("postgres initialization failed", "error", err)
+		return
+	}
+
+	app := app.NewContext(os.Getenv("APP_VERSION"), database)
+
+	server, err := server.New(app)
 	if err != nil {
 		slog.Error("server initialization failed", "error", err)
 		return

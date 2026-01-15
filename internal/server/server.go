@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ezh0v/pumpkin/internal/pkg/postgres"
+	"github.com/ezh0v/pumpkin/internal/app"
 	"github.com/ezh0v/pumpkin/internal/server/admin"
 	"github.com/ezh0v/pumpkin/internal/server/api"
 	"github.com/ezh0v/pumpkin/internal/server/web"
@@ -23,7 +23,7 @@ type Server struct {
 	resources       []io.Closer
 }
 
-func New(opts ...Option) (*Server, error) {
+func New(ctx *app.Context, opts ...Option) (*Server, error) {
 	options := &options{}
 
 	for _, opt := range opts {
@@ -32,15 +32,10 @@ func New(opts ...Option) (*Server, error) {
 
 	optionsWithDefaults(options)
 
-	database, err := postgres.New("")
-	if err != nil {
-		return nil, err
-	}
-
 	handler := http.NewServeMux()
-	handler.Handle("/", web.Handler())
-	handler.Handle("/api/", api.Handler())
-	handler.Handle("/admin/", admin.Handler())
+	handler.Handle("/", web.Handler(ctx))
+	handler.Handle("/api/", api.Handler(ctx))
+	handler.Handle("/admin/", admin.Handler(ctx))
 	handler.Handle("/static/", http.FileServer(http.FS(staticFS)))
 
 	return &Server{
@@ -50,7 +45,7 @@ func New(opts ...Option) (*Server, error) {
 			Handler: handler,
 		},
 		resources: []io.Closer{
-			database,
+			// database,
 		},
 	}, nil
 }

@@ -4,6 +4,8 @@ import (
 	"embed"
 	"html/template"
 	"net/http"
+
+	"github.com/ezh0v/pumpkin/internal/app"
 )
 
 var (
@@ -17,8 +19,8 @@ func init() {
 	templates = template.Must(template.ParseFS(viewsFS, "views/**/*.html"))
 }
 
-func Handler() http.Handler {
+func Handler(ctx *app.Context) http.Handler {
 	handler := http.NewServeMux()
-	handler.HandleFunc("GET /", home())
+	handler.HandleFunc("GET /", home(ctx))
 	return handler
 }
