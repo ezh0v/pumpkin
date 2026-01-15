@@ -20,3 +20,9 @@ migrate-up: ## Apply all migrations
 
 migrate-down: ## Roll back the last migration
 	goose postgres "$(DATABASE_CONNECT)" down -dir migrations
+
+##@ Application
+run: ## Runs the application locally using the current environment configuration
+	APP_VERSION=dev \
+	DATABASE_CONNECT="$(DATABASE_CONNECT)" \
+	go run main.go
