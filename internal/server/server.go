@@ -4,7 +4,6 @@ import (
 	"context"
 	"embed"
 	"errors"
-	"io"
 	"net/http"
 	"time"
 
@@ -20,7 +19,6 @@ var staticFS embed.FS
 type Server struct {
 	shutdownTimeout time.Duration
 	httpServer      *http.Server
-	resources       []io.Closer
 }
 
 func New(ctx *app.Context, opts ...Option) (*Server, error) {
@@ -44,9 +42,6 @@ func New(ctx *app.Context, opts ...Option) (*Server, error) {
 			Addr:    options.address,
 			Handler: handler,
 		},
-		resources: []io.Closer{
-			// database,
-		},
 	}, nil
 }
 
@@ -63,13 +58,5 @@ func (s *Server) Shutdown() error {
 	ctx, cancel := context.WithTimeout(context.Background(), s.shutdownTimeout)
 	defer cancel()
 
-	shutdownErr := s.httpServer.Shutdown(ctx)
-
-	for _, resource := range s.resources {
-		if err := resource.Close(); err != nil {
-			shutdownErr = errors.Join(shutdownErr, err)
-		}
-	}
-
-	return shutdownErr
+	return s.httpServer.Shutdown(ctx)
 }
