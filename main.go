@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"io"
 	"log/slog"
 	"os"
 	"os/signal"
@@ -25,6 +26,8 @@ func main() {
 		return
 	}
 
+	defer close(database)
+
 	app := app.NewContext(os.Getenv("APP_VERSION"), database)
 
 	server, err := server.New(app)
@@ -43,5 +46,13 @@ func main() {
 
 	if err := server.Shutdown(); err != nil {
 		slog.Error("server shutdown failed", "error", err)
+	}
+}
+
+func close(resources ...io.Closer) {
+	for _, resource := range resources {
+		if err := resource.Close(); err != nil {
+			slog.Error("failed to close resource", "error", err)
+		}
 	}
 }
