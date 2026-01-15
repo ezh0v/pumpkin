@@ -21,19 +21,19 @@ type Server struct {
 	httpServer      *http.Server
 }
 
-func New(ctx *app.Context, opts ...Option) (*Server, error) {
+func New(app *app.Context, opts ...Option) (*Server, error) {
 	options := &options{}
 
 	for _, opt := range opts {
 		opt(options)
 	}
 
-	optionsWithDefaults(options)
+	options.withDefaults()
 
 	handler := http.NewServeMux()
-	handler.Handle("/", web.Handler(ctx))
-	handler.Handle("/api/", api.Handler(ctx))
-	handler.Handle("/admin/", admin.Handler(ctx))
+	handler.Handle("/", web.Handler(app))
+	handler.Handle("/api/", api.Handler(app))
+	handler.Handle("/admin/", admin.Handler(app))
 	handler.Handle("/static/", http.FileServer(http.FS(staticFS)))
 
 	return &Server{

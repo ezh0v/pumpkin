@@ -25,7 +25,6 @@ func main() {
 		slog.Error("postgres initialization failed", "error", err)
 		return
 	}
-
 	defer close(database)
 
 	app := app.NewContext(os.Getenv("APP_VERSION"), database)
@@ -49,14 +48,8 @@ func main() {
 	}
 }
 
-func close(resources ...io.Closer) {
-	for _, resource := range resources {
-		if resource == nil {
-			continue
-		}
-
-		if err := resource.Close(); err != nil {
-			slog.Error("failed to close resource", "error", err)
-		}
+func close(resource io.Closer) {
+	if err := resource.Close(); err != nil {
+		slog.Error("failed to close resource", "error", err)
 	}
 }

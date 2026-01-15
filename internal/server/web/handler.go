@@ -19,8 +19,8 @@ func init() {
 	templates = template.Must(template.ParseFS(viewsFS, "views/**/*.html"))
 }
 
-func Handler(ctx *app.Context) http.Handler {
+func Handler(app *app.Context) http.Handler {
 	handler := http.NewServeMux()
-	handler.HandleFunc("GET /", home(ctx))
+	handler.HandleFunc("GET /", home(app))
 	return handler
 }

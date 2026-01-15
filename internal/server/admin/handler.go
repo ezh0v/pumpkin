@@ -6,7 +6,7 @@ import (
 	"github.com/ezh0v/pumpkin/internal/app"
 )
 
-func Handler(ctx *app.Context) http.Handler {
+func Handler(app *app.Context) http.Handler {
 	handler := http.NewServeMux()
 	return http.StripPrefix("/admin", handler)
 }

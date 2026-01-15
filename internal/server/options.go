@@ -9,7 +9,7 @@ type options struct {
 	shutdownTimeout time.Duration
 }
 
-func optionsWithDefaults(opts *options) {
+func (opts *options) withDefaults() {
 	if opts.address == "" {
 		opts.address = ":8000"
 	}
