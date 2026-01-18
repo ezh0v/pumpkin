@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"io"
+	"log"
 	"log/slog"
 	"os"
 	"os/signal"
@@ -37,7 +38,7 @@ func main() {
 
 	go func() {
 		if err := server.ListenAndServe(); err != nil {
-			slog.Error("server terminated with an error", "error", err)
+			log.Fatal("server terminated with an error", "error", err)
 		}
 	}()
 

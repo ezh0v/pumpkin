@@ -1,0 +1,10 @@
+{{template "header.html" .}}
+<main class="admin-login-page">
+    <form class="admin-login-form" action="/admin/login" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ .form.Token }}">
+        <input type="email" name="email" value="{{ .form.Email }}" placeholder="Email" required>
+        <input type="password" name="password" value="{{ .form.Password }}" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+</main>
+{{template "footer.html" .}}

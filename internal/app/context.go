@@ -1,8 +1,7 @@
 package app
 
 type Context struct {
-	Version string
-
+	Version  string
 	database Database
 }
 
