@@ -1,6 +1,10 @@
 {{template "header.html" .}}
-<main class="admin-login-page">
-    <form class="admin-login-form" action="/admin/login" method="POST">
+<main class="login-page">
+    <form class="login-form" action="/admin/login" method="POST">
+        <a href="/admin/login" class="logo">
+            <img src="/static/logo.svg">
+            <span>Pumpkin<small>booru</small></span>
+        </a>
         <input type="hidden" name="csrf_token" value="{{ .form.Token }}">
         <input type="email" name="email" value="{{ .form.Email }}" placeholder="Email" required>
         <input type="password" name="password" value="{{ .form.Password }}" placeholder="Password" required>
