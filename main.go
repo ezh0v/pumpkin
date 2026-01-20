@@ -28,7 +28,7 @@ func main() {
 	}
 	defer close(database)
 
-	app := app.NewContext(os.Getenv("APP_VERSION"), database)
+	app := app.New(os.Getenv("APP_VERSION"), database)
 
 	server, err := server.New(app)
 	if err != nil {

@@ -12,12 +12,12 @@ import (
 type Context struct {
 	*html.Renderer
 	*scs.SessionManager
-	*app.Context
+	*app.Instance
 }
 
-func NewContext(app *app.Context, templates *template.Template) *Context {
+func NewContext(app *app.Instance, templates *template.Template) *Context {
 	return &Context{
-		Context:        app,
+		Instance:       app,
 		Renderer:       html.NewRenderer(templates),
 		SessionManager: scs.New(),
 	}

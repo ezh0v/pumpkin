@@ -21,7 +21,7 @@ type Server struct {
 	httpServer      *http.Server
 }
 
-func New(app *app.Context, opts ...Option) (*Server, error) {
+func New(app *app.Instance, opts ...Option) (*Server, error) {
 	options := &options{}
 
 	for _, opt := range opts {

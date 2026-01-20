@@ -13,7 +13,7 @@ import (
 //go:embed views
 var viewsFS embed.FS
 
-func Handler(app *app.Context) http.Handler {
+func Handler(app *app.Instance) http.Handler {
 	c := handlers.NewContext(app,
 		template.Must(template.ParseFS(viewsFS, "views/**/*.html")),
 	)
