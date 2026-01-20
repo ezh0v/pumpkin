@@ -7,7 +7,7 @@ import (
 	"github.com/go-ozzo/ozzo-validation/v4/is"
 	"github.com/justinas/nosurf"
 
-	"github.com/ezh0v/pumpkin/internal/app"
+	"github.com/ezh0v/pumpkin/internal/server/handlers"
 	"github.com/ezh0v/pumpkin/internal/server/pkg/response"
 )
 
@@ -24,8 +24,8 @@ func (f *loginForm) validate() error {
 	)
 }
 
-func login(app *app.Context) http.HandlerFunc {
-	page := renderer.NewPage("login.html")
+func login(c *handlers.Context) http.HandlerFunc {
+	page := c.Renderer.NewPage("login.html")
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		form := &loginForm{
@@ -40,7 +40,7 @@ func login(app *app.Context) http.HandlerFunc {
 		}
 
 		if err := form.validate(); err != nil {
-			response.WithPage(w, page, "form", form, "message", err.Error())
+			response.WithPage(w, page, "form", form)
 			return
 		}
 
@@ -48,7 +48,7 @@ func login(app *app.Context) http.HandlerFunc {
 	}
 }
 
-func logout(app *app.Context) http.HandlerFunc {
+func logout(c *handlers.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/admin/login", http.StatusSeeOther)
 	}

@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/ezh0v/pumpkin/internal/app"
-	"github.com/ezh0v/pumpkin/internal/server/admin"
-	"github.com/ezh0v/pumpkin/internal/server/api"
-	"github.com/ezh0v/pumpkin/internal/server/web"
+	"github.com/ezh0v/pumpkin/internal/server/handlers/admin"
+	"github.com/ezh0v/pumpkin/internal/server/handlers/api"
+	"github.com/ezh0v/pumpkin/internal/server/handlers/web"
 )
 
 //go:embed static
