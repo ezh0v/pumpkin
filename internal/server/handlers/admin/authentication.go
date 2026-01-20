@@ -8,7 +8,7 @@ import (
 	"github.com/justinas/nosurf"
 
 	"github.com/ezh0v/pumpkin/internal/server/handlers"
-	"github.com/ezh0v/pumpkin/internal/server/pkg/response"
+	"github.com/ezh0v/pumpkin/internal/server/response"
 )
 
 type loginForm struct {
@@ -25,7 +25,7 @@ func (f *loginForm) validate() error {
 }
 
 func login(c *handlers.Context) http.HandlerFunc {
-	page := c.Renderer.NewPage("login.html")
+	page := c.NewPage("login.html")
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		form := &loginForm{

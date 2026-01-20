@@ -23,5 +23,8 @@ func Handler(app *app.Context) http.Handler {
 	handler.HandleFunc("/login", login(c))
 	handler.HandleFunc("/logout", logout(c))
 
-	return http.StripPrefix("/admin", middlewares.With(handler, c.SessionManager.LoadAndSave, middlewares.CSRF()))
+	return http.StripPrefix("/admin", middlewares.With(handler,
+		c.LoadAndSave,
+		middlewares.CSRF(),
+	))
 }

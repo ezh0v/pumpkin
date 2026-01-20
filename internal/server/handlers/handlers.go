@@ -10,15 +10,15 @@ import (
 )
 
 type Context struct {
-	*app.Context
 	*html.Renderer
 	*scs.SessionManager
+	*app.Context
 }
 
-func NewContext(app *app.Context, views *template.Template) *Context {
+func NewContext(app *app.Context, templates *template.Template) *Context {
 	return &Context{
 		Context:        app,
-		Renderer:       html.NewRenderer(views),
+		Renderer:       html.NewRenderer(templates),
 		SessionManager: scs.New(),
 	}
 }

@@ -21,5 +21,8 @@ func Handler(app *app.Context) http.Handler {
 	handler := http.NewServeMux()
 	handler.HandleFunc("/", home(c))
 
-	return middlewares.With(handler, c.SessionManager.LoadAndSave, middlewares.CSRF())
+	return middlewares.With(handler,
+		c.LoadAndSave,
+		middlewares.CSRF(),
+	)
 }

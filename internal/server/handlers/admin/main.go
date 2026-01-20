@@ -4,11 +4,11 @@ import (
 	"net/http"
 
 	"github.com/ezh0v/pumpkin/internal/server/handlers"
-	"github.com/ezh0v/pumpkin/internal/server/pkg/response"
+	"github.com/ezh0v/pumpkin/internal/server/response"
 )
 
-func home(context *handlers.Context) http.HandlerFunc {
-	page := context.Renderer.NewPage("home.html")
+func home(c *handlers.Context) http.HandlerFunc {
+	page := c.NewPage("home.html")
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		response.WithPage(w, page)
