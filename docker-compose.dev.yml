@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
       args:
         APP_VERSION: ${APP_VERSION:-dev}
+    image: pumpkin
     container_name: pumpkin
     restart: always
     ports:
