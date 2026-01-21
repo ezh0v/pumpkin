@@ -36,11 +36,11 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_TIMEZONE: ${TIMEZONE}
     volumes:
-      - ./runtime/postgresql:/var/lib/postgresql
       - ./certs/postgres_cert.pem:/var/lib/postgresql/cert.pem:ro
       - ./certs/postgres_key.pem:/var/lib/postgresql/key.pem:ro
       - ./configs/postgresql.conf:/etc/postgresql/postgresql.conf
       - ./configs/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./runtime/postgresql:/var/lib/postgresql
     networks:
       - backend
     command: -c config_file=/etc/postgresql/postgresql.conf
