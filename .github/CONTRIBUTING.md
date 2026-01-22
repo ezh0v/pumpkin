@@ -1,8 +1,10 @@
 # Contributing Guidelines
 
-AI generated PRs will not be accepted without discussion.
+Please open an issue to discuss your proposal before submitting a PR.
 
-- Fork the project on GitHub.
-- Make your feature addition or bug fix in a branch. Example branches: (`feature/name`) / (`fix/name`).
-- Push your branch to GitHub.
-- Send a Pull Request. Include a description of your changes.
+PRs created with AI tools are allowed only after prior discussion. Please open an issue first.
+
+- Fork the repository.
+- Create a branch for your changes, for example `feature/name` or `fix/name`.
+- Push your branch to your fork and open a PR against this repository.
+- In the PR description, include a link to any related issues.
