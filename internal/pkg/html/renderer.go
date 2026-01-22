@@ -5,15 +5,26 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"maps"
 )
 
 type Renderer struct {
-	templates *template.Template
+	globalValues map[string]any
+	templates    *template.Template
 }
 
-func NewRenderer(templates *template.Template) *Renderer {
+func NewRenderer(templates *template.Template, opts ...Option) *Renderer {
+	options := &options{
+		globalValues: make(map[string]any),
+	}
+
+	for _, opt := range opts {
+		opt(options)
+	}
+
 	return &Renderer{
-		templates: templates,
+		globalValues: options.globalValues,
+		templates:    templates,
 	}
 }
 
@@ -25,11 +36,11 @@ func (r *Renderer) NewPage(name string) *Page {
 }
 
 func (r *Renderer) RenderTemplate(w io.Writer, name string, args ...any) error {
-	data := make(map[string]any)
-
 	if len(args)%2 != 0 {
 		return errors.New("args must be even number of elements: key, value...")
 	}
+
+	data := maps.Clone(r.globalValues)
 
 	for i := 0; i < len(args); i += 2 {
 		key, ok := args[i].(string)

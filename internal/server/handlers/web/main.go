@@ -11,6 +11,6 @@ func home(c *handlers.Context) http.HandlerFunc {
 	page := c.NewPage("home.html")
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		response.WithPage(w, page, "version", c.Version)
+		response.WithPage(w, page)
 	}
 }

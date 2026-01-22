@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/ezh0v/pumpkin/internal/app"
 	"github.com/ezh0v/pumpkin/internal/pkg/postgres"
@@ -15,6 +16,13 @@ import (
 )
 
 func main() {
+	local, err := time.LoadLocation(os.Getenv("TIMEZONE"))
+	if err != nil {
+		slog.Error("failed to load timezone", "error", err)
+		return
+	}
+	time.Local = local
+
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 

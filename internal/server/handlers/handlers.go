@@ -17,8 +17,10 @@ type Context struct {
 
 func NewContext(app *app.Instance, templates *template.Template) *Context {
 	return &Context{
-		Instance:       app,
-		Renderer:       html.NewRenderer(templates),
+		Instance: app,
+		Renderer: html.NewRenderer(templates,
+			html.WithGlobalValue("appVersion", app.Version),
+		),
 		SessionManager: scs.New(),
 	}
 }
