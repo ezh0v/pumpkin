@@ -19,7 +19,7 @@ providers:
 certificatesResolvers:
   letencrypt:
     acme:
-      email: ${ROOT_EMAIL}
+      email: ${CERT_EMAIL}
       storage: /certs/acme.json
       caServer: https://acme-v02.api.letsencrypt.org/directory
       httpChallenge:
