@@ -19,6 +19,7 @@ services:
         TimeZone=${TIMEZONE:-Europe/Moscow}
     depends_on:
       - postgres
+      - redis
   postgres:
     image: postgres:18.1-alpine3.23
     container_name: postgres
@@ -31,3 +32,9 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-db}
       POSTGRES_TIMEZONE: ${TIMEZONE:-Europe/Moscow}
       POSTGRES_HOST_AUTH_METHOD: trust
+  redis:
+    image: redis:8.4-alpine3.22
+    container_name: redis
+    volumes:
+      - ./runtime/redis/data:/data
+    command: redis-server --appendonly yes
