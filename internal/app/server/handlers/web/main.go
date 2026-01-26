@@ -3,8 +3,8 @@ package web
 import (
 	"net/http"
 
-	"github.com/ezh0v/pumpkin/internal/server/handlers"
-	"github.com/ezh0v/pumpkin/internal/server/response"
+	"github.com/ezh0v/pumpkin/internal/app/server/handlers"
+	"github.com/ezh0v/pumpkin/internal/app/server/response"
 )
 
 func home(c *handlers.Context) http.HandlerFunc {

@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/ezh0v/pumpkin/internal/app"
+	"github.com/ezh0v/pumpkin/internal/app/server"
 	"github.com/ezh0v/pumpkin/internal/pkg/postgres"
-	"github.com/ezh0v/pumpkin/internal/server"
 )
 
 func main() {

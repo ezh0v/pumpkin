@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"github.com/ezh0v/pumpkin/internal/app"
-	"github.com/ezh0v/pumpkin/internal/server/handlers"
-	"github.com/ezh0v/pumpkin/internal/server/middlewares"
+	"github.com/ezh0v/pumpkin/internal/app/server/handlers"
+	"github.com/ezh0v/pumpkin/internal/app/server/middlewares"
 )
 
 //go:embed views
