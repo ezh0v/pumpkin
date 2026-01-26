@@ -59,10 +59,10 @@ func main() {
 }
 
 func version() {
-	if version := os.Getenv("APP_VERSION"); version == "" {
-		fmt.Println("unknown")
-	} else {
+	if version := os.Getenv("APP_VERSION"); version != "" {
 		fmt.Println(version)
+	} else {
+		fmt.Println("unknown")
 	}
 }
 
@@ -71,10 +71,10 @@ func help() {
 Community booru-style gallery.
 
 Usage:
-	pumpkin                  Start application server.
+	pumpkin                          Start application server.
 
-	pumpkin -v, --version    Print application version and exit.
-	pumpkin -h, --help       Show this menu and exit.
+	pumpkin -v, --version            Print application version.
+	pumpkin -h, --help               Show this menu.
 
 	pumpkin <command> [arguments]
 
