@@ -71,14 +71,13 @@ func help() {
 Community booru-style gallery.
 
 Usage:
-	pumpkin                          Start application server.
-
-	pumpkin -v, --version            Print application version.
-	pumpkin -h, --help               Show this menu.
-
-	pumpkin <command> [arguments]
+    pumpkin                          Start application server.
+    pumpkin -v, --version            Print application version.
+    pumpkin -h, --help               Show this menu.
+    pumpkin <command> [arguments]
 
 Available commands:
+    user    Create and delete users.
 
 Use "pumpkin <command> -h, --help" for command-specific help information.
 	`)
