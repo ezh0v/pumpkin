@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log"
 	"log/slog"
@@ -55,6 +56,32 @@ func main() {
 	if err := server.Shutdown(); err != nil {
 		slog.Error("server shutdown failed", "error", err)
 	}
+}
+
+func version() {
+	if version := os.Getenv("APP_VERSION"); version == "" {
+		fmt.Println("unknown")
+	} else {
+		fmt.Println(version)
+	}
+}
+
+func help() {
+	fmt.Println(`
+Community booru-style gallery.
+
+Usage:
+	pumpkin                  Start application server.
+
+	pumpkin -v, --version    Print application version and exit.
+	pumpkin -h, --help       Show this menu and exit.
+
+	pumpkin <command> [arguments]
+
+Available commands:
+
+Use "pumpkin <command> -h, --help" for command-specific help information.
+	`)
 }
 
 func close(resource io.Closer) {
