@@ -19,8 +19,16 @@ type loginForm struct {
 
 func (f *loginForm) validate() error {
 	return validation.ValidateStruct(f,
-		validation.Field(&f.Email, validation.Required, validation.NilOrNotEmpty, is.Email),
-		validation.Field(&f.Password, validation.Required, validation.NilOrNotEmpty, validation.RuneLength(10, 32)),
+		validation.Field(&f.Email,
+			validation.Required,
+			validation.NilOrNotEmpty,
+			is.Email,
+		),
+		validation.Field(&f.Password,
+			validation.Required,
+			validation.NilOrNotEmpty,
+			validation.RuneLength(10, 32),
+		),
 	)
 }
 
@@ -46,12 +54,16 @@ func login(c *handlers.Context) http.HandlerFunc {
 
 		ctx := r.Context()
 
-		if err := c.RenewToken(ctx); err != nil {
+		user, err := c.Admin().Authenticate(ctx, form.Email, form.Password)
+		if err != nil {
 			response.WithPage(w, page, "form", form)
 			return
 		}
 
-		c.Put(ctx, "userUUID", "")
+		if err := c.LoginUser(ctx, user.UUID); err != nil {
+			response.WithPage(w, page, "form", form)
+			return
+		}
 
 		http.Redirect(w, r, "/admin", http.StatusSeeOther)
 	}
@@ -64,14 +76,10 @@ func logout(c *handlers.Context) http.HandlerFunc {
 			return
 		}
 
-		ctx := r.Context()
-
-		if err := c.RenewToken(ctx); err != nil {
+		if err := c.LogoutUser(r.Context()); err != nil {
 			http.Redirect(w, r, "/admin", http.StatusSeeOther)
 			return
 		}
-
-		c.Remove(ctx, "userUUID")
 
 		http.Redirect(w, r, "/admin/login", http.StatusSeeOther)
 	}

@@ -18,7 +18,6 @@ func With(handler http.Handler, middlewares ...Middleware) http.Handler {
 
 func CSRF() Middleware {
 	return func(next http.Handler) http.Handler {
-		// TODO: configure
 		return nosurf.New(next)
 	}
 }
